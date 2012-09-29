@@ -1,0 +1,5 @@
+PROJECT 2:
+
+
+	Assignment two involved some some critical thinking. I'm not positive that I accomplished the task in the best way; however, my code works in the way you want it to. In order to get things working, I gave the player object eight differrent bitmaps and made one of them visible based off the color and direction of the player. For the enemies, I only gave them one bitmap since they didn't change directions. 
+	The most difficult part in this assignment was creating the bitmaps. It was very tedious and not being a great artist didn't help. Although I have already accepted that I would not be an artist in the industry. Many other things proved to be tedious in the project such as embedding all the images and making sure not to duplicate things from copying and pasting. The end product was well worth the repetition though.
