@@ -1,0 +1,4 @@
+Assignment 4
+
+
+	The hardest part of this assignment for me was getting started. A long period of my time was spent on trying to fix a problem with the flash player. My player was set to 11.4 which didn't have a file needed to compile. I got over that hump by changing the platform in the project properties. The next big hump was getting the button to work on the ShellState. It took a while to realize that my up and down mouse events weren't being called because the console was added overtop of the main display. After figuring these things out, everything else was straight forward. I had the console working at one point however I seemed to have broken the code trying to find the keycode for the tilde (~). I'm turning in a project with all but the last completed and no extra credit. I was unable to attend last, so I bet if I did I would have completed more of this project.
