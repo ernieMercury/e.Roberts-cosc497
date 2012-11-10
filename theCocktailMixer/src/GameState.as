@@ -1,9 +1,15 @@
 package  
 {
 	import engine.center;
+	
 	import engine.Display;
+	
+	import engine.State;	
 	import engine.IState;
+
+	
 	import engine.Time;
+	
 	import engine.maketf;
 	import flash.display.SpreadMethod;
 	import flash.display.Sprite;
@@ -16,12 +22,12 @@ package
 	
 	public class GameState implements IState
 	{
-				
-		private var player	:Player;
-		
-		
-		
+
 		private var rwColor:uint = 0xff0000;
+		
+		private var isAdded:Boolean = false;
+		
+		private var currentDepth:int = 0; 
 				
 		/// CTOR - minimize putting any code in here!
 		public function GameState() 
@@ -64,40 +70,43 @@ package
 			
 			Display.main.addChild(rwIndicator);
 			
-			var npc:Sprite = new Sprite();
+			//var npc:Sprite = new Sprite();
 			
-			var g:Graphics = npc.graphics;	
-			g.beginFill( 0xffaaaa);
-			g.drawRect(0, 0, 64, 175);
-			g.endFill();
 			
-			Display.main.addChild(npc);
 			
-			player = new Player();
-			Display.main.addChild( player );
+
+			
+			Display.main.addChild( Global.player );
+			Display.main.addChild(Global.npc);
+			
 			trace("player drawn");
-			center( player );
+			//center( player );
 			
-			npc.x = player.x +(player.x/2);
-			npc.y = 225;
+			/*npc.x = player.x +(player.x/2);
+			npc.y = 225;*/
 			
-			rwIndicator.x = (npc.x + npc.width)+ 5;
+			rwIndicator.x = (Global.npc.x + Global.npc.width)+ 5;
 			rwIndicator.y = 200;
 			
-			player.x *= 0.5;
-			player.y = 225;
+			/*player.x *= 0.5;
+			player.y = 225;*/
 			
-			trace("playerY: " + player.y);
+			//trace("playerY: " + player.y);
 /////////////////////////////////////////////////////////////////////////////////////////////////			
-			var greet:Depth = new Depth();
+			/*var greet:Depth = new Depth();
 			
 			greet.setDepth(Global.depthID);
 			
 			for (var b:int = 0; b < greet.Options.length; b++) {
 				Display.ui.addChild(greet.Options[b].button);
 				trace(greet.Options[b].text);
-			}
+			}*/
 			//Display.ui.addChild
+			setUpOptions();
+			
+			for (var b:int = 0; b < Global.vGameDepths[currentDepth].Options.length; b++) {
+				Display.ui.addChild(Global.vGameDepths[currentDepth].Options[b].button);
+			}
 ////////////////////////////////////////////////////////////////////////////////////////			
 			var cocktailButton:Sprite = new Sprite();
 			cocktailButton = makeButton("C", clickCocktail, 50, 60);
@@ -117,7 +126,22 @@ package
 		{
 			var delta:Number = Time.deltaTime;	// cache delta value, used frequently
 			
-			player.update();
+			if (currentDepth != Global.depthID){
+				Global.vGameDepths[currentDepth].endDepth();
+				currentDepth = Global.depthID;
+				isAdded = false;
+			}
+			else {
+				if (!isAdded){
+					for (var b:int = 0; b < Global.vGameDepths[currentDepth].Options.length; b++) {
+						Display.ui.addChild(Global.vGameDepths[currentDepth].Options[b].button);
+					}
+					isAdded = true;
+				}
+			}
+			
+			if (Global.depthID > 6)
+				State.current = new WinState();
 			
 		}
 		

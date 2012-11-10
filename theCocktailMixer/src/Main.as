@@ -21,7 +21,8 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			Systems.init( stage );
 			
-			//Global.level = 1;
+			Global.depthID = 0;
+			Global.vGameDepths = createDepths();
 			State.current = new GameState();
 			
 			addEventListener( Event.ENTER_FRAME, update );

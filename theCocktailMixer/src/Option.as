@@ -29,35 +29,22 @@ package
 		
 		public function clickOption( button:ButtonPure ):void
 		{
-			var index:int;
-			
-			
 			if (isGood) {
-				//show response based on text
-			switch(Global.depthID) {
-				case 0:
-						for (var i:int = 0; Global.goodGreetings.length; i++) {
-							if (this.text == Global.goodGreetings[i] && i & 1) {
-								Global.rspString = Global.rsp0[0];
-								break;
-							}
-							else {
-								Global.rspString = Global.rsp0[1];
-								break;
-							}
-						}
-						
-						trace(Global.rspString);
-					break;
+				Global.depthID++;
+
 			}
-				
+			else {
+				if (Global.depthID < 7)
+					Global.depthID = 7;
+				else if (Global.depthID < 8)
+					Global.depthID = 8;
+				else if (Global.depthID < 9)
+					Global.depthID = 9;					
 			}
-			else
-				trace("Bad option");
+				trace(Global.depthID);
 				
-				
-			Global.responseTf.text = Global.rspString;
-			Display.ui.addChild(Global.responseTf);
+			/*Global.responseTf.text = Global.rspString;
+			Display.ui.addChild(Global.responseTf);*/
 			//State.current = new GameState();
 			// WARNING: Be aware that end() was just called on this state!
 		}
