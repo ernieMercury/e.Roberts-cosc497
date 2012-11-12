@@ -6,9 +6,9 @@ package engine
 	import flash.display.Sprite;
 	import flash.text.TextField;
 
-	public function makeButton( text:String, callback:Function, width:int = 300, height:int = 50, scale:Number = 1.0 ) :Sprite
+	public function makeButton( text:String, callback:Function, rgbColor:uint = 0x909090, scale:Number = 1.0, height:int = 50, width:int = 300 ) :Sprite
 	{
-		var bp:ButtonPure = new ButtonPure( text, callback, width, height, scale );
+		var bp:ButtonPure = new ButtonPure( text, callback, width, height, scale, rgbColor );
 		return bp;
 	}
 }

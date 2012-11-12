@@ -17,15 +17,16 @@ package engine
 		
 		
 		/// CTOR
-		public function ButtonPure( text:String, callBack:Function, width:int, height:int, scale:Number ) 
+		public function ButtonPure( text:String, callBack:Function, width:int, height:int, scale:Number, rgbColor:uint ) 
 		{
 			var WIDTH:int = width;
 			var HEIGHT:int = height;
 			var SCALE:Number = scale;
+			var COLOR:uint = rgbColor;
 			
 			this.callBack = callBack;
 			
-			up 		= makeButtonState( text, 0x909090, WIDTH, HEIGHT, SCALE );
+			up 		= makeButtonState( text, COLOR, WIDTH, HEIGHT, SCALE );
 			down	= makeButtonState( text, 0xf0f0f0, WIDTH, HEIGHT, SCALE );
 			
 			addChild( up );

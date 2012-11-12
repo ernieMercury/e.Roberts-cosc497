@@ -9,6 +9,7 @@ package engine
 	
 		public static var console	: Console;
 		public static var actors	: ActorManager;
+		public static var sound		: SoundManager;
 		
 		
 		/// Initialize sub-systems in the proper order (and prevent re-initialization).
@@ -20,6 +21,7 @@ package engine
 			Time.init( stage );
 			Display.init( stage );
 			Input.init( stage );
+			sound = new SoundManager();
 			
 			console = Console.getInstance();
 			actors	= new ActorManager();

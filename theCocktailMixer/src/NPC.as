@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.Graphics;
 	
@@ -7,18 +8,35 @@ package
 	 * ...
 	 * @author Ernest Roberts
 	 */
-	public class NPC extends Sprite
+	public class NPC
 	{
+		
+		public var bmpNPC:Bitmap = new Bitmap();
+		public var bmpNPC0:Bitmap = new Resource.imgNPC0();
+		public var bmpNPC1:Bitmap = new Resource.imgNPC1();
 		
 		public function NPC() 
 		{
-			var g:Graphics = this.graphics;	
-			g.beginFill( 0xffaaaa);
-			g.drawRect(0, 0, 64, 175);
-			g.endFill();
+			bmpNPC.bitmapData = bmpNPC0.bitmapData;
 			
-			x = 450;
-			y = 225;
+			bmpNPC.x = 400+bmpNPC.width;
+			bmpNPC.y = 200;
+			
+			bmpNPC.scaleX = -1;
+		}
+		
+		public function update():void {
+			
+			var r:int = Math.floor(Math.random() * 100);
+			
+			if ( r == 7) {
+				
+				if (bmpNPC.bitmapData != bmpNPC1.bitmapData)
+					bmpNPC.bitmapData = bmpNPC1.bitmapData;
+				else
+					bmpNPC.bitmapData = bmpNPC0.bitmapData;
+			}
+			
 		}
 		
 	}

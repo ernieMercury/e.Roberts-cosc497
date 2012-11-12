@@ -9,23 +9,29 @@ package
 	import engine.*;
 
 	
-	public class Player extends Sprite
+	public class Player 
 	{
+		
+		public var bmpPlayer:Bitmap = new Bitmap();
+		public var bmpPlayer0:Bitmap = new Resource.imgPlayer0();
+		public var bmpPlayer1:Bitmap = new Resource.imgPlayer1();
 
+		private var isDrinking:Boolean = false;
+		
+		private var numSec:Number = 0;
+		
 		/// CTOR
 		public function Player() 
 		{
 			// Draw once			
 			
-			var g:Graphics = this.graphics;	
-			g.beginFill( 0x00aaff );
-			g.drawRect(0, 0, 64, 175);
-			g.endFill();
+			bmpPlayer.bitmapData = bmpPlayer0.bitmapData;
 			
 			
 			
-			x = 150-width;
-			y = 225;
+			bmpPlayer.x = 86;// 150-width;
+			bmpPlayer.y = 200;
+			
 			
 		}
 		
@@ -34,8 +40,25 @@ package
 		public function update():void
 		{
 			var delta:Number = Time.deltaTime;
+			//trace(delta);
 			
+			var r:int = Math.floor(Math.random() * 100);
 			
+			if ( r == 7) {
+				isDrinking = true;
+			}
+			
+			if (isDrinking) {
+				bmpPlayer.bitmapData = bmpPlayer1.bitmapData;
+				numSec += delta;
+				if (numSec > 5) {
+					numSec = 0;
+					isDrinking = false;					
+					bmpPlayer.bitmapData = bmpPlayer0.bitmapData;
+				}
+			}
+			
+					
 			
 		}
 		

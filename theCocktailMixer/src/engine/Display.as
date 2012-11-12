@@ -1,5 +1,6 @@
 package engine 
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 
@@ -38,7 +39,7 @@ package engine
 			// Layered base on the order
 			/* This is a gimme, I just uncommented out adding these to the display chain; that's right..*/
 			//HACK
-			//stage.addChild( bg );
+			stage.addChild( bg );
 			stage.addChild( main );
 			stage.addChild( ui );
 			//stage.addChild( console );
@@ -47,6 +48,7 @@ package engine
 				/// Clear all
 		static public function clear() :void
 		{
+			bg.removeChildren();
 			main.removeChildren();
 			ui.removeChildren();
 		}

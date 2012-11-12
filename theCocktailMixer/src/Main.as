@@ -19,15 +19,18 @@ package
 		private function init(e:Event = null):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
+			Resource.init();
 			Systems.init( stage );
 			
 			Global.depthID = 0;
+			Global.currDepth = Global.prevDepth = 0; 
+
 			Global.vGameDepths = createDepths();
-			State.current = new GameState();
+			
+			State.current = new ShellState();
 			
 			addEventListener( Event.ENTER_FRAME, update );
-			
-		
 		}
 		
 		private function update( e:Event ):void

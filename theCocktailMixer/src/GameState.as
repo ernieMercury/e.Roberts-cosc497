@@ -1,6 +1,8 @@
 package  
 {
 	import engine.center;
+	import engine.Systems;
+	import flash.display.Bitmap;
 	
 	import engine.Display;
 	
@@ -23,11 +25,14 @@ package
 	public class GameState implements IState
 	{
 
-		private var rwColor:uint = 0xff0000;
+		private var rgbColor:uint = 0xff0000;
 		
 		private var isAdded:Boolean = false;
 		
-		private var currentDepth:int = 0; 
+		private var numSec:Number = 0;
+		
+		private var bmpBG:Bitmap = new Resource.imgBkg();
+		
 				
 		/// CTOR - minimize putting any code in here!
 		public function GameState() 
@@ -38,6 +43,17 @@ package
 		/// @see IState
 		public function start():void
 		{
+			Global.depthID = 0;
+			Global.currDepth = Global.prevDepth = 0;
+			Global.rspString = " ";
+			
+			Global.alert.bmpAlert.visible = false;
+			
+			setUpOptions();			
+			
+			Display.bg.addChild(bmpBG);
+			bmpBG.x = -3;
+			bmpBG.y = 10;
 			
 			var responseField:Sprite = new Sprite();
 			
@@ -49,114 +65,76 @@ package
 			Display.main.addChild(responseField);
 			
 			responseField.x = 50;
-			
-			
-			
 			Global.responseTf.width 		= 300;
-			//responseTf.scaleY 		= SCALE;
 			
-			//responseTf.text 		= Global.rspString;
-			Global.responseTf.x			= 300;
+			Global.responseTf.text 		= Global.rspString;
+			Global.responseTf.x			= Display.stage.width/2;
 			Global.responseTf.y 			= 0;
 			Global.responseTf.mouseEnabled = false;
 			
+			Display.ui.addChild(Global.responseTf);
 			
-			var rwIndicator:Sprite = new Sprite();
+			Display.main.addChild( Global.player.bmpPlayer );
+			Display.main.addChild(Global.npc.bmpNPC);
+			Display.main.addChild(Global.alert.bmpAlert);
 			
-			var rw:Graphics = rwIndicator.graphics;	
-			rw.beginFill(rwColor);
-			rw.drawRect(0, 0, 32, 32);
-			rw.endFill();
+/////////////////////////////////////////////////////////////////////////////////////////////////	
 			
-			Display.main.addChild(rwIndicator);
-			
-			//var npc:Sprite = new Sprite();
-			
-			
-			
-
-			
-			Display.main.addChild( Global.player );
-			Display.main.addChild(Global.npc);
-			
-			trace("player drawn");
-			//center( player );
-			
-			/*npc.x = player.x +(player.x/2);
-			npc.y = 225;*/
-			
-			rwIndicator.x = (Global.npc.x + Global.npc.width)+ 5;
-			rwIndicator.y = 200;
-			
-			/*player.x *= 0.5;
-			player.y = 225;*/
-			
-			//trace("playerY: " + player.y);
-/////////////////////////////////////////////////////////////////////////////////////////////////			
-			/*var greet:Depth = new Depth();
-			
-			greet.setDepth(Global.depthID);
-			
-			for (var b:int = 0; b < greet.Options.length; b++) {
-				Display.ui.addChild(greet.Options[b].button);
-				trace(greet.Options[b].text);
-			}*/
-			//Display.ui.addChild
-			setUpOptions();
-			
-			for (var b:int = 0; b < Global.vGameDepths[currentDepth].Options.length; b++) {
-				Display.ui.addChild(Global.vGameDepths[currentDepth].Options[b].button);
+			for (var b:int = 0; b < Global.vGameDepths[Global.currDepth].Options.length; b++) {
+				Display.ui.addChild(Global.vGameDepths[Global.currDepth].Options[b].button);
 			}
-////////////////////////////////////////////////////////////////////////////////////////			
-			var cocktailButton:Sprite = new Sprite();
+			
+////////////////////////////////////////////////////////////////////////////////////////////////
+			/*var cocktailButton:Sprite = new Sprite();
 			cocktailButton = makeButton("C", clickCocktail, 50, 60);
 			
 			cocktailButton.x = 310;
 			cocktailButton.y = 110;
 			
-			Display.ui.addChild(cocktailButton);
-			/*tempOption.button.x = 5;
-			tempOption.button.y = 150;*/
-			//Display.ui.addChild(tempOption.button);
+			Display.ui.addChild(cocktailButton);*/
+			
+			Systems.sound.play( Resource.sndCrowd );
 		}
-		
-		
+				
 		/// @see IState
 		public function update():void
-		{
+		{			
 			var delta:Number = Time.deltaTime;	// cache delta value, used frequently
 			
-			if (currentDepth != Global.depthID){
-				Global.vGameDepths[currentDepth].endDepth();
-				currentDepth = Global.depthID;
+			numSec += delta;
+						
+			Global.player.update();
+			Global.npc.update();
+			Global.alert.update();
+			
+			if (Global.currDepth != Global.depthID){
+				Global.vGameDepths[Global.currDepth].endDepth();
+				
+				if(Global.currDepth < 7)
+					Global.prevDepth = Global.currDepth;
+				
+				Global.currDepth = Global.depthID;
 				isAdded = false;
+				
 			}
 			else {
-				if (!isAdded){
-					for (var b:int = 0; b < Global.vGameDepths[currentDepth].Options.length; b++) {
-						Display.ui.addChild(Global.vGameDepths[currentDepth].Options[b].button);
+				if (!isAdded) {
+								
+					Global.responseTf.text = Global.rspString;
+					
+					for (var b:int = 0; b < Global.vGameDepths[Global.currDepth].Options.length; b++) {
+						Display.ui.addChild(Global.vGameDepths[Global.currDepth].Options[b].button);
 					}
 					isAdded = true;
 				}
-			}
-			
-			if (Global.depthID > 6)
-				State.current = new WinState();
-			
+			}			
 		}
 		
 		/// @see IState
 		public function end():void
 		{
+			Systems.sound.stop();
 			Display.clear();
-		}
-		
-		public function clickCocktail( button:ButtonPure ):void
-		{
-			//trace("clickOption");
-
-			//State.current = new GameState();
-			// WARNING: Be aware that end() was just called on this state!
 		}
 	}
 

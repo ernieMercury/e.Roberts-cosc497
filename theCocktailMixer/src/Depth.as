@@ -19,22 +19,28 @@ package
 			
 		}
 		
-		public function setOptions(good:Array, bad:Array):void {
+		public function setOptions(good:Array, bad:Array, rsp:Array):void {
 			
-			var rand:int = Math.floor(Math.random() * 4);
+			var rand:int = Math.floor(Math.random() * good.length);
+			var rnd:int = Math.floor(Math.random() * rsp.length);
 			var previousR:int = -1;
 			
 			var op:Option = new Option();
 			var tmpOptions :Vector.<Option> = new Vector.<Option>(3);
 			
-			op.text = good[0];// rand];
+			//Set Good Option
+			op.text = good[rand];
 			op.isGood = true;
+			
+			//Set Response
+			op.stRsp = rsp[rnd];
 			
 			tmpOptions[0] = op;
 			
+			//Set 2 Bad Options
 			for (var i:int = 2; i > 0; i--) {
 				
-				var r:int = Math.floor(Math.random() * 4);
+				var r:int = Math.floor(Math.random() * bad.length);
 				
 				if (previousR == r) {
 					i++;
@@ -51,6 +57,7 @@ package
 				previousR = r;
 			}
 			
+			//Randomize final option vector
 			Options = randomizeVector(tmpOptions);
 					
 			var x:int = 5;
@@ -61,10 +68,10 @@ package
 				Options[z].createButton();
 				Options[z].button.x = x;
 				Options[z].button.y = y;
-				
+								
 				y += 30;
 						
-			}
+			}	
 		}
 	
 		public function endDepth():void {

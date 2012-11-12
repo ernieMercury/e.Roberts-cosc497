@@ -1,19 +1,18 @@
-Whats done:
+***The Cocktail Mixer***
 
+Instructions:
 
-	first depth of conversation is set up
+	Use the mouse to choose the best options.
 
-	when good option is shown a text is shown at the top
+	Get enough right to win the date.
 
-		*bug - right response not always shown
-	basic layout is done cept w/o bitmaps
+Engine Improvements:
 
+*minor
 
+files affected - makeTf.as
+		 makeButton.as
+		 ButtonPure.as
 
-in progress:
-
-	flesh out convo
-	
-	cocktail button chooses right option
-
-	input resources (bitmaps, music)
+*added ability to change color and font of text
+*added ability to change color and scale of button
